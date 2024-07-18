@@ -28,7 +28,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>org.rzhang.study.ddd.bootstrap.DddDemoBootstrapApplication</mainClass>
+                    <mainClass>org.rzhang.study.ddd.bootstrap.DddDemoApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>

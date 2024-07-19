@@ -2,9 +2,9 @@ package org.rzhang.study.ddd.common.util;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.rzhang.study.ddd.common.exception.JacksonProcessingException;
 
 import java.util.Objects;
 
@@ -49,10 +49,9 @@ public final class JacksonUtil {
 
         try {
             return getObjectMapper().writeValueAsString(obj);
-        } catch (JsonProcessingException e) {
-            log.error("toJsonString error, object is : {}", obj, e);
-
-            return null;
+        } catch (Exception e) {
+            String errorMsg = StrUtil.format("toJsonString error, object is : {}", obj);
+            throw new JacksonProcessingException(errorMsg, e);
         }
     }
 
@@ -70,10 +69,9 @@ public final class JacksonUtil {
 
         try {
             return getObjectMapper().readValue(jsonString, clazz);
-        } catch (JsonProcessingException e) {
-            log.error("parse object error, json string is : {}", jsonString, e);
-
-            return null;
+        } catch (Exception e) {
+            String errorMsg = StrUtil.format("parse object error, json string is : {}", jsonString);
+            throw new JacksonProcessingException(errorMsg, e);
         }
     }
 

@@ -2,6 +2,7 @@ package org.rzhang.study.ddd.common.exception;
 
 /**
  * @description: ddd demo exception
+ *
  * @author: rzhang
  * @date: 2024-07-19 23:45:58
  */

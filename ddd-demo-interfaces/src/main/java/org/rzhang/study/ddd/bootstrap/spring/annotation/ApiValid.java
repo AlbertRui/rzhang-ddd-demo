@@ -5,7 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import java.lang.annotation.*;
 
 /**
- * @description: api valid
+ * @description: Api校验注解
  * @author: rzhang
  * @date: 2024-07-19 23:11:37
  */

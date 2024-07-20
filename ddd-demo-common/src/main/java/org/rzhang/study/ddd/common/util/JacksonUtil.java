@@ -2,10 +2,13 @@ package org.rzhang.study.ddd.common.util;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.rzhang.study.ddd.common.exception.JacksonProcessingException;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -22,7 +25,7 @@ public final class JacksonUtil {
     /**
      * 获取ObjectMapper
      *
-     * @return objectMapper instance
+     * @return {@link ObjectMapper}
      */
     public static ObjectMapper getObjectMapper() {
         if (Objects.isNull(OBJECT_MAPPER)) {
@@ -71,6 +74,46 @@ public final class JacksonUtil {
             return getObjectMapper().readValue(jsonString, clazz);
         } catch (Exception e) {
             String errorMsg = StrUtil.format("parse object error, json string is : {}", jsonString);
+            throw new JacksonProcessingException(errorMsg, e);
+        }
+    }
+
+    /**
+     * 反序列化json数组为java.util.List
+     *
+     * @param jsonArrayString 待解析的json数组字符串
+     * @return {@link List<T>}
+     */
+    public static <T> List<T> parseList(String jsonArrayString) {
+        if (StrUtil.isBlank(jsonArrayString)) {
+            return null;
+        }
+
+        try {
+            return getObjectMapper().readValue(jsonArrayString, new TypeReference<>() {});
+        } catch (Exception e) {
+            String errorMsg = StrUtil.format("parse java list error, list json string is : {}", jsonArrayString);
+            throw new JacksonProcessingException(errorMsg, e);
+        }
+
+    }
+
+    /**
+     * 解析json字符串为java.util.Map
+     *
+     * @param mapJsonString 待解析的json string
+     * @return {@link Map<K, V>}
+     */
+    public static <K, V> Map<K, V> parseMap(String mapJsonString) {
+        if (StrUtil.isBlank(mapJsonString)) {
+            return null;
+        }
+
+        try {
+            ObjectMapper mapper = getObjectMapper();
+            return mapper.readValue(mapJsonString, new TypeReference<>() {});
+        } catch (Exception e) {
+            String errorMsg = StrUtil.format("parse java map error, map json string is : {}", mapJsonString);
             throw new JacksonProcessingException(errorMsg, e);
         }
     }

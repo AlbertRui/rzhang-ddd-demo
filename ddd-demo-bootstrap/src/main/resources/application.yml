@@ -1,0 +1,17 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: rzhang-ddd-demo
+  profiles:
+    active: "@activeProfile@"
+
+logging:
+  config: classpath:log4j2-spring.yml
+  level:
+    com.baomidou.mybatisplus: debug
+    org.rzhang.study.ddd.infrastructure.mysql.mapper: debug
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
